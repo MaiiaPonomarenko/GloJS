@@ -1,9 +1,9 @@
-let money;
-let income;
-let addExpenses;
-let deposit;
-let mission;
-let perio;
+let money,
+    income,
+    addExpenses,
+    deposit,
+    mission,
+    period;
 
 //сообщения с любым текстом
 alert ("Сообщение с любым текстом");
