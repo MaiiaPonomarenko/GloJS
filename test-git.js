@@ -3,7 +3,7 @@ let income;
 let addExpenses;
 let deposit;
 let mission;
-let perio;
+let period;
 
 alert ("Сообщение с любым текстом");
 console.log("Сообщение с любым текстом в консоли");
