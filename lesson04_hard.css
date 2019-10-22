@@ -1,0 +1,10 @@
+h1{
+    font-family: sans-serif;
+    font-size: 2em;
+}
+.hide{
+    display: none;
+}
+div{
+    float: left;
+}
