@@ -1,3 +1,4 @@
+// пятое задание
 'use strict';
 
 let money,
