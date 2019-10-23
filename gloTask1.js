@@ -3,6 +3,7 @@
 
 let income = '6780',
     mission = 6700000,
+    period = 8,
     money = +prompt("Ваш месячный доход?"),
     //addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую"),
     deposit =confirm("Есть ли у вас депозит в банке?");
@@ -40,6 +41,7 @@ let getAccumulatedMonth = function (money, getExpensesMonth) {
 
 let accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth(price1, price2));
 console.log('Накопления за месяц ' + accumulatedMonth);
+console.log ("Накопления за период " + period + " мес " + period * accumulatedMonth);
 /*********  // *********/
 
 
