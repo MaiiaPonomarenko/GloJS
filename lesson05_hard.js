@@ -11,13 +11,19 @@ for (let i = 0; i < arr.length; i++ ){
   }
 }
 
-for (let number = 2; number <= 100; number++){
-  for (let j = 2; j < number; j++){
-    if (number % j === 0 || number % (j+1) === 0){
-     break;
-    } else
-    
-      console.log(number);
-    
+let number = 2;
+while(number <= 100) {
+  if(isNat(number)) {
+    console.log(number + " делители этого числа 1 и " + number);
   }
+  number++;
+}
+
+function isNat(number) {
+  for (let i = 2; i < number; i++) {
+    if (number % i === 0) {
+      return false;
+    }
+  }
+  return true;
 }
