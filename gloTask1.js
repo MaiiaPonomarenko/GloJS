@@ -41,7 +41,7 @@ let getExpensesMonth = function () {
     do {
       answer = prompt("Во сколько это обойдется?", 15500);
     } while (isNaN(answer) || answer === '' || answer === null);
-      sum += answer;
+      sum += +answer;
     }
   return sum;
 };
@@ -63,11 +63,11 @@ console.log ("Накопления за период " + period + " мес " + p
 
 
 /*********  getTargetMonth - расчет периода достижения цели  **********/
-let  getTargetMonth = function (mission, accumulatedMonth) {
+let  getTargetMonth = function () {
   return Math.ceil(mission / accumulatedMonth);
 };
-  if (getTargetMonth > 0){
-    console.log("За " + getTargetMonth(mission, accumulatedMonth) + " месяцев будет достигнута цель: " + mission);
+if (getTargetMonth() > 0){
+    console.log("За " + getTargetMonth() + " месяцев будет достигнута цель: " + mission);
   } else {
     console.log('Цель не будет достигнута');
   }
@@ -95,15 +95,13 @@ let getStatusIncome = function (budgetDay) {
     case (budgetDay === 0):
       return (document.write("Кушать что будешь?"));
       break;
-    default:
-      return (document.write("Что-то пошло не так..."));
   }
 };
 
 if (budgetDay > 0){
   getStatusIncome(budgetDay);
 } else {
-  document.write('Ваш уровень дохода ниже плинтуса');
+  document.write('Что-то пошло не так...');
 }
 
 /*********  // *********/
