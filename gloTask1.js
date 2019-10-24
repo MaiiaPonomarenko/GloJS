@@ -1,11 +1,12 @@
+// пятое задание
 'use strict';
 
 let money,
-    income = '6780',
-    mission = 6700000,
-    period = 8,
-    //addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую"),
-    deposit =confirm("Есть ли у вас депозит в банке?");
+  income = '6780',
+  mission = 6700000,
+  period = 8,
+  //addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую"),
+  deposit =confirm("Есть ли у вас депозит в банке?");
 
 let start = function () {
   do {
@@ -25,7 +26,7 @@ showTypeOf(deposit);
 /*********  // *********/
 
 let spending1,
-    spending2;
+  spending2;
 
 /*********  getExpensesMonth - все расходы за месяц **********/
 let getExpensesMonth = function () {
@@ -40,8 +41,8 @@ let getExpensesMonth = function () {
     do {
       answer = prompt("Во сколько это обойдется?", 15500);
     } while (isNaN(answer) || answer === '' || answer === null);
-      sum += answer;
-    }
+    sum += +answer;
+  }
   return sum;
 };
 
@@ -62,14 +63,14 @@ console.log ("Накопления за период " + period + " мес " + p
 
 
 /*********  getTargetMonth - расчет периода достижения цели  **********/
-let  getTargetMonth = function (mission, accumulatedMonth) {
+let  getTargetMonth = function () {
   return Math.ceil(mission / accumulatedMonth);
 };
-  if (getTargetMonth > 0){
-    console.log("За " + getTargetMonth(mission, accumulatedMonth) + " месяцев будет достигнута цель: " + mission);
-  } else {
-    console.log('Цель не будет достигнута');
-  }
+if (getTargetMonth() > 0){
+  console.log("За " + getTargetMonth() + " месяцев будет достигнута цель: " + mission);
+} else {
+  console.log('Цель не будет достигнута');
+}
 
 /*********  // *********/
 
@@ -94,15 +95,13 @@ let getStatusIncome = function (budgetDay) {
     case (budgetDay === 0):
       return (document.write("Кушать что будешь?"));
       break;
-    default:
-      return (document.write("Что-то пошло не так..."));
   }
 };
 
 if (budgetDay > 0){
   getStatusIncome(budgetDay);
 } else {
-  document.write('Ваш уровень дохода ниже плинтуса');
+  document.write('Что-то пошло не так...');
 }
 
 /*********  // *********/
