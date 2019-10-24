@@ -1,8 +1,7 @@
 let check = function () {
   let str = +prompt("Введите число");
-  let reg = new RegExp("[\p{Alpha}\p{M}\p{Pc}\p{Join_C}]");
   
-  while (reg.test(str) || str === ''){
+  while (isNaN(str) || str === ''){
     str = prompt("Вы ввели неверное значение. Попробуйте еще раз");
   } return str;
 };
