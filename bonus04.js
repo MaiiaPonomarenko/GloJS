@@ -6,41 +6,39 @@ function getRandomInt(max) {
 }
 
 function Game() {
-  let randomNumber = getRandomInt(100);
-  let userNumber = prompt("Угадай число");
-  	while (isNaN(userNumber)){
-	  userNumber = prompt("Вы ввели не число");
-	}
-	
-  console.log(randomNumber);
+  
+  function question() {
+    let aa = prompt('Угадай число');
+    while (isNaN(aa)) {
+      aa = prompt("Вы ввели не число");
+    }
+    if (aa === null){
+      alert ("Игра завершена");
+      throw new Error();
 
-  while(userNumber !== randomNumber){
-      if (userNumber < randomNumber){
-      alert ("Больше!");
-      userNumber = prompt("Угадай снова");
-        while (isNaN(userNumber)){
-		  userNumber = prompt("Вы ввели не число");
-		}
-		if(userNumber === null){
-			break;
-		}
-    } else if (userNumber > randomNumber){
-      alert ("Меньше!");
-      userNumber = prompt("Угадай снова");
-      	while (isNaN(userNumber)){
-		  userNumber = prompt("Вы ввели не число");
-		}
-		if(userNumber === null){
-			break;
-		}
+    }
+    return aa;
+  }
+  
+  let randomNumber = getRandomInt(100);
+  console.log(randomNumber);
+  let userNumber = question();
+  
+  while (userNumber !== randomNumber) {
+    
+    if (userNumber < randomNumber) {
+      alert("Больше!");
+      userNumber = question();
+    } else if (userNumber > randomNumber) {
+      alert("Меньше!");
+      userNumber = question();
     } else {
       alert("Поздравляю, ты угадал!");
       let nextGame = confirm("Хочешь сыграть еще?");
-      if (nextGame){
+      if (nextGame) {
         Game();
       } else break;
     }
   }
 }
-
 Game();
