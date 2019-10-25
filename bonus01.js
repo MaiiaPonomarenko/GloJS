@@ -1,5 +1,5 @@
 let check = function () {
-  let str = +prompt("Введите число");
+  let str = prompt("Введите число");
   
   while (isNaN(str) || str === ''){
     str = prompt("Вы ввели неверное значение. Попробуйте еще раз");
