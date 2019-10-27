@@ -89,8 +89,6 @@ appData.budget = money;
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
-
-console.log(appData.expenses);
 console.log("Расходы за месяц: " + appData.expensesMonth);
 
 if (appData.getTargetMonth() > 0){
