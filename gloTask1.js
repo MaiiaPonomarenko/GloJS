@@ -103,7 +103,10 @@ if (appData.budgetDay > 0){
   document.write('Что-то пошло не так...');
 }
 
-
+console.log('Наша программа включает в себя данные: ');
+for(let key in appData){
+      console.log(key + ' ' + appData[key]);
+    }
 
 /*********  showTypeOf - вывод типа переменных **********/
 let showTypeOf = function (data) {
