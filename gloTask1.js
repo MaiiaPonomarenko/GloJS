@@ -1,4 +1,4 @@
-// шестое задание
+
 'use strict';
 
 let money,
@@ -10,6 +10,24 @@ let money,
 
 start();
 
+/*************  validation  *************************/
+let validationNumber = function (item = 'Проверка числа') {
+  let validation;
+  do {
+    validation = +prompt(item);
+  } while (isNaN(validation) || validation === '' || validation === null);
+  return validation;
+};
+
+let validationString = function (item = 'Проверка строки') {
+  let validation;
+  do {
+    validation = prompt(item);
+  } while (!isNaN(validation) || validation === '' || validation === null);
+  return validation;
+};
+/*************  //validation  *************************/
+
 let appData = {
   budget: 0,
   income: {},
@@ -17,6 +35,8 @@ let appData = {
   expenses: {}, //доп расходы
   addExpenses: [], //возможные расходы
   deposit: false,
+  percentDeposit: 0,
+  moneyDeposit: 0,
   mission: 4500000,
   period: 8,
   budgetDay: 0,
@@ -24,25 +44,27 @@ let appData = {
   expensesMonth: 0,
   
   asking: function () {
-/*    let addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
-        appData.addExpenses = addExpenses.toLowerCase().split(',');
-        appData.deposit =confirm("Есть ли у вас депозит в банке?");*/
-
+    
+    if(confirm('Есть ли у вас дополнительный источник заработка?')){
+      let itemIncome = validationString('Какой у вас есть дополнительный заработок?'),
+          cashIncome = validationNumber('Сколько в месяц вы на этом зарабатываете?');
+      appData.income[itemIncome] = cashIncome;
+    }
+    
     for (let i = 0; i < 2; i++){
-      
       let exp = function () {
-          let expValue;
-          let exp1 = prompt("Какие обязательные ежемесячные расходы у вас есть?", "Ипотека");
-          do {
-            expValue = prompt("Во сколько это обойдется?", 15500);
-          } while (isNaN(expValue) || expValue === '' || expValue === null);
-          return [exp1, expValue];
-          
-        };
+        let exp1 = validationString ('Какие обязательные ежемесячные расходы у вас есть?'),
+        expValue = validationNumber('Во сколько это обойдется?');
+        return [exp1, expValue];
+      };
       
       let expFunc1 = exp();
       appData.expenses[expFunc1[0]] = expFunc1[1];
     }
+  
+    let addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
+    appData.addExpenses = addExpenses.toLowerCase().split(',');
+    appData.deposit =confirm("Есть ли у вас депозит в банке?");
   },
   
   // все расходы за месяц
@@ -61,6 +83,17 @@ let appData = {
   // достижение цели
   getTargetMonth: function () {
     return Math.ceil(appData.mission / appData.budgetMonth);
+  },
+  
+  getInfoDeposit: function () {
+    if (appData.deposit){
+        appData.percentDeposit = validationNumber('Какой годовой процент?');
+        appData.moneyDeposit = validationNumber('Какая сумма заложена?');
+    }
+  },
+  
+  calcSavedMoney: function () {
+    return appData.budgetMonth * appData.period;
   },
   
   // статус дохода
@@ -84,6 +117,7 @@ let appData = {
         break;
     }
   }
+  
 };
 appData.budget = money;
 appData.asking();
@@ -93,11 +127,11 @@ appData.getBudget();
 console.log(appData.expenses);
 console.log("Расходы за месяц: " + appData.expensesMonth);
 
-if (appData.getTargetMonth() > 0){
-  console.log("За " + appData.getTargetMonth() + " месяцев будет достигнута цель: " + appData.mission);
-} else {
-  console.log('Цель не будет достигнута');
+for (let i = 0; i < appData.addExpenses.length; i++){
+  appData.addExpenses[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1).toLowerCase();
 }
+
+console.log(String(appData.addExpenses));
 
 if (appData.budgetDay > 0){
   appData.getStatusIncome(appData.budgetDay);
@@ -105,12 +139,6 @@ if (appData.budgetDay > 0){
   document.write('Что-то пошло не так...');
 }
 
-
-
-/*********  showTypeOf - вывод типа переменных **********/
-let showTypeOf = function (data) {
-  console.log(data, typeof (data));
-};
 
 
 
