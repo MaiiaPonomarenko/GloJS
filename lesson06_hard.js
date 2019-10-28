@@ -16,8 +16,9 @@ for (let i = 0; i < arrWeek.length; i++){
   if(i > 4)
     li.classList.add('ital');
   
-  if((weekday === 0 && i === 6) || (weekday > 0 && i === weekday+1))
+  if((weekday === 0 && i === 6) || (i === weekday-1)){
     li.classList.add('weight');
+  }
   
   ul.append(li);
 }
