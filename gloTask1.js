@@ -1,4 +1,3 @@
-
 'use strict';
 
 let money,
@@ -63,8 +62,7 @@ let appData = {
     }
   
     let addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
-    appData.addExpenses = addExpenses.toLowerCase().split(',');
-    appData.deposit =confirm("Есть ли у вас депозит в банке?");
+    appData.addExpenses = addExpenses.split(',');
   },
   
   // все расходы за месяц
@@ -127,11 +125,12 @@ appData.getBudget();
 console.log(appData.expenses);
 console.log("Расходы за месяц: " + appData.expensesMonth);
 
-for (let i = 0; i < appData.addExpenses.length; i++){
-  appData.addExpenses[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1).toLowerCase();
-}
+appData.addExpenses = appData.addExpenses.map(function (item) {
+  return item[0].toUpperCase() + item.slice(1).toLowerCase();
+});
 
-console.log(String(appData.addExpenses));
+console.log(appData.addExpenses.join(', '));
+
 
 if (appData.budgetDay > 0){
   appData.getStatusIncome(appData.budgetDay);
