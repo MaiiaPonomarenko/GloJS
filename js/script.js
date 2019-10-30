@@ -19,12 +19,14 @@ const budgetMonthValue = document.getElementsByClassName('budget_month-value'),
       incomePeriodValue = document.getElementsByClassName('income_period-value'),
       targetMonthValue = document.getElementsByClassName('target_month-value');
 
-const salaryAmount = document.querySelector('.salary-amount'),
-      incomeTitle = document.querySelector('.income-title'),
+let   salaryAmount = document.querySelector('.salary-amount'),
+      incomeTit = document.querySelectorAll('.income-title'),
+      incomeTitle = incomeTit[1];
       incomeAmount = document.querySelector('.income-amount'),
       additionalIncomeIitem = document.querySelector('.additional_income-item'),
-      
-      expensesTitle = document.querySelector('.expenses-title'),
+  
+      expensesTit = document.querySelectorAll('.expenses-title'),
+      expensesTitle = expensesTit[1],
       expensesAmount = document.querySelector('.expenses-amount'),
       additionalExpensesItem = document.querySelector('.additional_expenses-item'),
       
@@ -32,4 +34,4 @@ const salaryAmount = document.querySelector('.salary-amount'),
       periodSelect = document.querySelector('.period-select');
 
 console.log(additionalIncomeValue);
-console.log(incomeAmount);
+console.log(incomeTitle, expensesTitle);
