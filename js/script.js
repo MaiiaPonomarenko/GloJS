@@ -26,7 +26,8 @@ let   start = document.getElementById('start'),
   additionalExpensesItem = document.querySelector('.additional_expenses-item'),
   
   targetAmount = document.querySelector('.target-amount'),
-  periodSelect = document.querySelector('.period-select');
+  periodSelect = document.querySelector('.period-select'),
+  periodAmount = document.querySelector('.period-amount');
 
 
 /*************  validation  *************************/
@@ -129,11 +130,6 @@ let appData = {
         appData.income[itemIncome] = cashIncome;
       }
     });
-    
-    
-    /*for(let key in appData.income){
-      appData.incomeMonth += +appData.income[key];
-    }*/
   },
   
   getAddExpenses: function () {
@@ -179,6 +175,11 @@ let appData = {
     }
   },
   
+  getPeriodTarget: function (event) {
+    periodAmount.textContent = event.target.value;
+  
+  },
+  
   calcPeriod: function () {
     return appData.budgetMonth * periodSelect.value;
   },
@@ -207,11 +208,11 @@ let appData = {
   
 };
 
-/* start - работа на нажатие кнопки "рассчитать" */
+/* события */
 start.addEventListener('click', appData.start);
-
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
+periodSelect.addEventListener('change', appData.getPeriodTarget);
 
 appData.addExpenses = appData.addExpenses.map(function (item) {
   return item[0].toUpperCase() + item.slice(1).toLowerCase();
