@@ -46,12 +46,12 @@ function placeholderInputValue() {
     inputPlaceholder[i].addEventListener('keyup', function(event){
       
       if(inputPlaceholder[i].placeholder === "Сумма"){
-        if((!/[\d]/.test(event.key)))
-          console.log("Введены некорректные данные");
+        if((!/[0-9]/.test(event.key)))
+          alert("Введены некорректные данные");
       } else if (inputPlaceholder[i].placeholder === "Наименование"){
         if (!(/[а-яА-я\.\,\!\?\;:]/.test(event.key)))
-          console.log("Введены некорректные данные");
-      } else startBtn.removeAttribute('disabled');
+          alert("Введены некорректные данные");
+      }
     });
   }
   let checkBtn = function(){
@@ -231,15 +231,12 @@ let count = 0;
 let clicked = function() {
   count++;
   if(count === 1){
+    let i=0;
     start.removeEventListener('click', clicked);
     salaryAmount.disabled = true;
-    incomeTitle.disabled = true;
-    incomeAmount.disabled = true;
     incomePlus.disabled = true;
     additionalIncomeItem[0].disabled = true;
     additionalIncomeItem[1].disabled = true;
-    expensesTitle.disabled = true;
-    expensesAmount.disabled = true;
     expensesPlus.disabled = true;
     additionalExpensesItem.disabled = true;
     targetAmount.disabled = true;
@@ -247,6 +244,21 @@ let clicked = function() {
     start.style.display = 'none';
     cancel.style.display = 'block';
     
+    let incomeTitleItem = document.querySelectorAll('.income-title');
+    let incomeAmountItem = document.querySelectorAll('.income-amount');
+    let expensesTitleItem = document.querySelectorAll('.expenses-title');
+    let expensesAmountItem = document.querySelectorAll('.expenses-amount');
+    while(i < incomeTitleItem.length){
+      incomeTitleItem[i].disabled = true;
+      incomeAmountItem[i].disabled = true;
+      i++;
+    }
+    while(i < expensesAmountItem.length){
+      expensesTitleItem[i].disabled = true;
+      expensesAmountItem[i].disabled = true;
+      console.log(expensesTitleItem[i]);
+      i++;
+    }
   }
 };
 
@@ -276,10 +288,10 @@ function disableValueExpenses() {
   let expensesTitleItem = document.querySelectorAll('.expenses-title');
   let expensesAmountItem = document.querySelectorAll('.expenses-amount');
   if(expensesTitleItem.length === 3){
-    expensesTitleItem[1].value = '';
+    expensesTitleItem[2].value = '';
     expensesAmountItem[1].value = '';
   } else if(expensesTitleItem.length === 4){
-    expensesTitleItem[2].value = '';
+    expensesTitleItem[3].value = '';
     expensesAmountItem[2].value = '';
   }
 }
