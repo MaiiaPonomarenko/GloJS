@@ -1,6 +1,5 @@
+//8-е
 'use strict';
-
-
 
 let button = document.querySelectorAll('button'),
   start = document.getElementById('start'),
