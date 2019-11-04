@@ -216,27 +216,27 @@ salaryAmount.addEventListener('keyup', checkBtn);
 /********** // ************/
 
 
-
-
 /********** блокировка полей input  ************/
 let count = 0;
-let clicked = function() {
+let input = document.querySelectorAll('input');
+for (let i = 0; i < input.length; i++) {
+  if (input[i].placeholder === 'Сумма' || input[i].placeholder === 'Наименование' || input[i].placeholder === 'название') {
+    input[i].classList.add('blocked');
+  }
+}
+
+function clicked () {
   count++;
-  if(count === 1){
+  let blocked = document.querySelectorAll('.blocked');
+  if (count === 1) {
+    for (let i = 0; i < blocked.length; i++) {
+      blocked[i].setAttribute("disabled", "disabled");
+    }
     start.removeEventListener('click', clicked);
-    salaryAmount.setAttribute("disabled", "disabled");
-    incomePlus.setAttribute("disabled", "disabled");
-    additionalIncomeItem[0].setAttribute("disabled", "disabled");
-    additionalIncomeItem[1].setAttribute("disabled", "disabled");
-    expensesPlus.setAttribute("disabled", "disabled");
-    additionalExpensesItem.setAttribute("disabled", "disabled");
-    targetAmount.setAttribute("disabled", "disabled");
-    depositCheck.setAttribute("disabled", "disabled");
     start.style.display = 'none';
     cancel.style.display = 'block';
   }
-};
-
+}
 
 start.addEventListener('click', appData.start);
 start.addEventListener('click', clicked);
