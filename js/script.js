@@ -34,34 +34,8 @@ let button = document.querySelectorAll('button'),
   
   targetAmount = document.querySelector('.target-amount'),
   periodSelect = document.querySelector('.period-select'),
-  periodAmount = document.querySelector('.period-amount'),
-  
-  inputPlaceholder = document.getElementsByTagName('input');
+  periodAmount = document.querySelector('.period-amount')
 
-/********   validation input   *********/
-function placeholderInputValue() {
-  startBtn.disabled = true;
-  
-  for (let i = 0; i < inputPlaceholder.length; i++){
-    inputPlaceholder[i].addEventListener('keyup', function(event){
-      
-      if(inputPlaceholder[i].placeholder === "Сумма"){
-        if((!/[0-9]/.test(event.key)))
-          alert("Введены некорректные данные");
-      } else if (inputPlaceholder[i].placeholder === "Наименование"){
-        if (!(/[а-яА-я\.\,\!\?\;:]/.test(event.key)))
-          alert("Введены некорректные данные");
-      }
-    });
-  }
-  let checkBtn = function(){
-    if(salaryAmount.value.length > 1){
-      startBtn.removeAttribute('disabled');
-    }
-  };
-  salaryAmount.addEventListener('keyup', checkBtn);
-}
-placeholderInputValue();
 
 let appData = {
   budget: 0,
@@ -80,7 +54,6 @@ let appData = {
   
   start: function () {
     appData.budget = +salaryAmount.value;
-    
     appData.getExpenses();
     appData.getIncome();
     appData.getExpensesMonth();
@@ -97,16 +70,16 @@ let appData = {
     additionalExpensesValue.value = appData.addExpenses.join(', ');
     additionalIncomeValue.value = appData.addIncome.join(', ');
     targetMonthValue.value = appData.getTargetMonth();
-    
-    // накопления за период
-    periodSelect.addEventListener('change', incomePeriodValueResult);
-      function incomePeriodValueResult (event) {
-        if (event.target.value !== periodSelect.value){
-          appData.calcPeriod();
-        }
-        return incomePeriodValue.value = appData.calcPeriod();
+  
+  /********   накопления за период   *********/
+  periodSelect.addEventListener('change', incomePeriodValueResult);
+    function incomePeriodValueResult (event) {
+      if (event.target.value !== periodSelect.value){
+        appData.calcPeriod();
       }
-    incomePeriodValue.value = appData.calcPeriod();
+      return incomePeriodValue.value = appData.calcPeriod();
+    }
+  incomePeriodValue.value = appData.calcPeriod();
   },
   
   /********   обязательные расходы   *********/
@@ -114,6 +87,7 @@ let appData = {
     let cloneExpensesItem = expensesItems[0].cloneNode(true);
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
     expensesItems = document.querySelectorAll('.expenses-items');
+    inputBan();
       if(expensesItems.length ===3){
         expensesPlus.style.display = 'none';
       }
@@ -133,6 +107,7 @@ let appData = {
     let cloneIncomeItem = incomeItems[0].cloneNode(true);
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
     incomeItems = document.querySelectorAll('.income-items');
+    inputBan();
     if(incomeItems.length ===3){
       incomePlus.style.display = 'none';
     }
@@ -227,38 +202,38 @@ let appData = {
 };
 
 /* события */
+
+/********** запрет нажания на кнопку рассчитать
+ при пустом значении поля "Месячный доход"  ************/
+startBtn.setAttribute("disabled", "disabled");
+
+let checkBtn = function(){
+  if(salaryAmount.value.length > 1){
+    startBtn.removeAttribute('disabled');
+  }
+};
+salaryAmount.addEventListener('keyup', checkBtn);
+/********** // ************/
+
+
+
+
+/********** блокировка полей input  ************/
 let count = 0;
 let clicked = function() {
   count++;
   if(count === 1){
-    let i=0;
     start.removeEventListener('click', clicked);
-    salaryAmount.disabled = true;
-    incomePlus.disabled = true;
-    additionalIncomeItem[0].disabled = true;
-    additionalIncomeItem[1].disabled = true;
-    expensesPlus.disabled = true;
-    additionalExpensesItem.disabled = true;
-    targetAmount.disabled = true;
-    depositCheck.disabled = true;
+    salaryAmount.setAttribute("disabled", "disabled");
+    incomePlus.setAttribute("disabled", "disabled");
+    additionalIncomeItem[0].setAttribute("disabled", "disabled");
+    additionalIncomeItem[1].setAttribute("disabled", "disabled");
+    expensesPlus.setAttribute("disabled", "disabled");
+    additionalExpensesItem.setAttribute("disabled", "disabled");
+    targetAmount.setAttribute("disabled", "disabled");
+    depositCheck.setAttribute("disabled", "disabled");
     start.style.display = 'none';
     cancel.style.display = 'block';
-    
-    let incomeTitleItem = document.querySelectorAll('.income-title');
-    let incomeAmountItem = document.querySelectorAll('.income-amount');
-    let expensesTitleItem = document.querySelectorAll('.expenses-title');
-    let expensesAmountItem = document.querySelectorAll('.expenses-amount');
-    while(i < incomeTitleItem.length){
-      incomeTitleItem[i].disabled = true;
-      incomeAmountItem[i].disabled = true;
-      i++;
-    }
-    while(i < expensesAmountItem.length){
-      expensesTitleItem[i].disabled = true;
-      expensesAmountItem[i].disabled = true;
-      console.log(expensesTitleItem[i]);
-      i++;
-    }
   }
 };
 
@@ -297,6 +272,63 @@ function disableValueExpenses() {
 }
 /********  //  *********/
 
+/********** запрет на ввод символов в input  ************/
+function isNumber(num) {
+  if((num >= '0' && num <= '9') || num === 'Backspace' || num === 'Delete' || num === 'ArrowLeft' || num === 'ArrowRight'){
+    return true
+  } else return false
+}
+
+function isSimbols(simb) {
+  if(/[а-яА-я\.\,\!\?\;:]/.test(simb) || simb === 'Backspace' || simb === 'Delete' || simb === 'ArrowLeft' || simb === 'ArrowRight'){
+    return true
+  } else return false
+  
+}
+
+function inputBan() {
+  let input = document.querySelectorAll('input');
+  for(let i = 0; i < input.length; i++) {
+    if (input[i].placeholder === 'Сумма'){
+      input[i].classList.add('numbers');
+    }
+    else if (input[i].placeholder === 'Наименование'){
+      input[i].classList.add('simbols');
+    }
+  }
+  
+  let numbers = document.querySelectorAll('.numbers');
+  for(let i = 0; i < numbers.length; i++){
+    numbers[i].addEventListener('keydown', function () {
+      if(isNumber(event.key) === false){
+        event.preventDefault(false);
+      }
+    });
+  }
+  
+  let simbols = document.querySelectorAll('.simbols');
+  for(let i = 0; i < simbols.length; i++) {
+    simbols[i].addEventListener('keydown', function () {
+      if (isSimbols(event.key) === false) {
+        event.preventDefault(false);
+      }
+    });
+  }
+}
+
+inputBan();
+
+/*
+document.querySelector('input').addEventListener('keydown', function () {
+  console.log(event.key);
+  if(isNumber(event.key) === false){
+    event.preventDefault(false);
+  }
+});
+*/
+
+
+/********** // ************/
 appData.addExpenses = appData.addExpenses.map(function (item) {
   return item[0].toUpperCase() + item.slice(1).toLowerCase();
 });
