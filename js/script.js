@@ -254,12 +254,21 @@ function Reset() {
   
   let incomeTitleItem = document.querySelectorAll('.income-title');
   let incomeAmountItem = document.querySelectorAll('.income-amount');
-  if(incomeTitleItem.length === 3){
-    incomeTitleItem[2].remove;
-    incomeAmountItem[1].remove;
-  } else if(incomeTitleItem.length === 4){
-    incomeTitleItem[3].remove;
-    incomeAmountItem[2].remove;
+   if(incomeTitleItem.length === 3){
+   incomeTitleItem[2].remove();
+   incomeAmountItem[1].remove();
+   } else if(incomeTitleItem.length === 4){
+   incomeTitleItem[3].remove();
+   incomeAmountItem[2].remove();
+   }
+  let expensesTitleItem = document.querySelectorAll('.expenses-title');
+  let expensesAmountItem = document.querySelectorAll('.expenses-amount');
+  if(expensesTitleItem.length === 3){
+    expensesTitleItem[2].remove();
+    expensesAmountItem[1].remove();
+  } else if(expensesTitleItem.length === 4){
+    expensesTitleItem[3].remove();
+    expensesAmountItem[2].remove();
   }
   
   if(incomeAmount.length > 1){
