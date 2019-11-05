@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/PersonalBudgetCalculator.iml" filepath="$PROJECT_DIR$/.idea/PersonalBudgetCalculator.iml" />
+      <module fileurl="file://E:\Document\Study\GloAcademy\JS\PersonalBudgetCalculator\.idea\test git.iml" filepath="E:\Document\Study\GloAcademy\JS\PersonalBudgetCalculator\.idea\test git.iml" />
+    </modules>
+  </component>
+</project>
