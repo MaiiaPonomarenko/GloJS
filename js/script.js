@@ -1,4 +1,3 @@
-
 'use strict';
 
 let button = document.querySelectorAll('button'),
@@ -52,15 +51,15 @@ let appData = {
   budgetMonth: 0,
   expensesMonth: 0,
   
-    start: function () {
-    appData.budget = +salaryAmount.value;
-    appData.getExpenses();
-    appData.getIncome();
-    appData.getExpensesMonth();
-    appData.getAddExpenses();
-    appData.getAddIncome();
-    appData.getBudget();
-    appData.showResult();
+  start: function () {
+    this.budget = +salaryAmount.value;
+    this.getExpenses();
+    this.getIncome();
+    this.getExpensesMonth();
+    this.getAddExpenses();
+    this.getAddIncome();
+    this.getBudget();
+    this.showResult();
   },
   
   showResult: function () {
@@ -97,7 +96,7 @@ let appData = {
       let itemExpenses = item.querySelector('.expenses-title').value;
       let cashExpenses = item.querySelector('.expenses-amount').value;
       if(itemExpenses !== '' && cashExpenses !== ''){
-        this.expenses[itemExpenses] = cashExpenses;
+        appData.expenses[itemExpenses] = cashExpenses;
       }
     })
   },
@@ -117,7 +116,7 @@ let appData = {
       let itemIncome = item.querySelector('.income-title').value;
       let cashIncome = item.querySelector('.income-amount').value;
       if(itemIncome !== '' && cashIncome !== ''){
-        this.income[itemIncome] = cashIncome;
+        appData.income[itemIncome] = cashIncome;
       }
     });
   },
@@ -128,7 +127,7 @@ let appData = {
     addExpenses.forEach(function (item) {
       item = item.trim();
       if (item !== ''){
-        this.addExpenses.push(item);
+        appData.addExpenses.push(item);
       }
     })
   },
@@ -138,7 +137,7 @@ let appData = {
     additionalIncomeItem.forEach(function(item){
       let itemValue = item.value.trim();
       if(itemValue !== ''){
-        this.addIncome.push(itemValue);
+        appData.addIncome.push(itemValue);
       }
     })
   },
@@ -146,7 +145,7 @@ let appData = {
   /********  все расходы за месяц   *********/
   getExpensesMonth: function () {
     for(let key in this.expenses){
-      this.expensesMonth += +(this.expenses[key]);
+      appData.expensesMonth += +(this.expenses[key]);
     }
   },
   
@@ -170,7 +169,6 @@ let appData = {
   
   getPeriodTarget: function (event) {
     periodAmount.textContent = event.target.value;
-    
   },
   
   calcPeriod: function () {
@@ -217,7 +215,6 @@ salaryAmount.addEventListener('keyup', checkBtn);
 
 
 /********** блокировка полей input  ************/
-let count = 0;
 let input = document.querySelectorAll('input[type=text]');
 for (let i = 0; i < input.length; i++) {
   if (input[i].placeholder === 'Сумма' || input[i].placeholder === 'Наименование' || input[i].placeholder === 'название') {
@@ -226,20 +223,34 @@ for (let i = 0; i < input.length; i++) {
 }
 
 function clicked () {
-  count++;
   let blocked = document.querySelectorAll('.blocked');
-  if (count === 1) {
     for (let i = 0; i < blocked.length; i++) {
       blocked[i].setAttribute("disabled", "disabled");
-    }
-    start.removeEventListener('click', clicked);
+    //start.removeEventListener('click', clicked);
     start.style.display = 'none';
     cancel.style.display = 'block';
   }
 }
 
-/*todo Привязать контекст вызова функции start к appData*/
-start.addEventListener('click', appData.start);
+/********** метод reset  ************/
+function Reset() {
+  start.style.display = 'block';
+  cancel.style.display = 'none';
+  
+  let blocked = document.querySelectorAll('.blocked');
+  for(let i = 0; i < blocked.length; i++){
+    blocked[i].removeAttribute("disabled");
+    blocked[i].value = '';
+    blocked[i].classList.remove('.blocked');
+  }
+  let resultTotal = document.querySelectorAll('.result-total');
+  for(let i = 0; i < resultTotal.length; i++){
+    resultTotal[i].value = '';
+  }
+}
+/********** // ************/
+
+start.addEventListener('click', appData.start.bind(appData));
 start.addEventListener('click', clicked);
 cancel.addEventListener('click', Reset);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
@@ -320,25 +331,7 @@ function inputBan() {
 inputBan();
 /********** //  ************/
 
-/********** метод reset  ************/
-function Reset() {
-  start.style.display = 'block';
-  cancel.style.display = 'none';
-  
-  let blocked = document.querySelectorAll('.blocked');
-  for(let i = 0; i < blocked.length; i++){
-    blocked[i].removeAttribute("disabled");
-    blocked[i].value = '';
-    blocked[i].classList.remove('.blocked');
-  }
-  let resultTotal = document.querySelectorAll('.result-total');
-  for(let i = 0; i < resultTotal.length; i++){
-    resultTotal[i].value = '';
-  }
-}
 
-
-/********** // ************/
 appData.addExpenses = appData.addExpenses.map(function (item) {
   return item[0].toUpperCase() + item.slice(1).toLowerCase();
 });
