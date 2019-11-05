@@ -251,6 +251,20 @@ function Reset() {
   for(let i = 0; i < resultTotal.length; i++){
     resultTotal[i].value = '';
   }
+  
+  let incomeTitleItem = document.querySelectorAll('.income-title');
+  let incomeAmountItem = document.querySelectorAll('.income-amount');
+  if(incomeTitleItem.length === 3){
+    incomeTitleItem[2].remove;
+    incomeAmountItem[1].remove;
+  } else if(incomeTitleItem.length === 4){
+    incomeTitleItem[3].remove;
+    incomeAmountItem[2].remove;
+  }
+  
+  if(incomeAmount.length > 1){
+    console.log('больше');
+  }
 }
 /********** // ************/
 
