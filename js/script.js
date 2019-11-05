@@ -1,39 +1,5 @@
 'use strict';
 
-let button = document.querySelectorAll('button'),
-  start = document.getElementById('start'),
-  startBtn = button[2],
-  
-  cancel = document.getElementById('cancel'),
-  btnPlus = document.getElementsByTagName('button'),
-  incomePlus = btnPlus[0],
-  expensesPlus = btnPlus[1],
-  additionalIncomeItem = document.querySelectorAll('.additional_income-item'),
-  depositCheck = document.querySelector('#deposit-check'),
-  
-  budgetMonthValue = document.getElementsByClassName('budget_month-value')[0],
-  budgetDayValue = document.getElementsByClassName('budget_day-value')[0],
-  expensesMonthValue = document.getElementsByClassName('expenses_month-value')[0],
-  additionalIncomeValue = document.getElementsByClassName('additional_income-value')[0],
-  additionalExpensesValue = document.getElementsByClassName('additional_expenses-value')[0],
-  incomePeriodValue = document.getElementsByClassName('income_period-value')[0],
-  targetMonthValue = document.getElementsByClassName('target_month-value')[0],
-  
-  salaryAmount = document.querySelector('.salary-amount'),
-  incomeTit = document.querySelectorAll('.income-title'),
-  incomeTitle = incomeTit[1],
-  incomeItems = document.querySelectorAll('.income-items'),
-  incomeAmount = document.querySelector('.income-amount'),
-  
-  expensesTit = document.querySelectorAll('.expenses-title'),
-  expensesTitle = expensesTit[1],
-  expensesItems = document.querySelectorAll('.expenses-items'),
-  additionalExpensesItem = document.querySelector('.additional_expenses-item'),
-  expensesAmount = document.querySelector('.expenses-amount'),
-  
-  targetAmount = document.querySelector('.target-amount'),
-  periodSelect = document.querySelector('.period-select'),
-  periodAmount = document.querySelector('.period-amount')
 
 
 let appData = {
