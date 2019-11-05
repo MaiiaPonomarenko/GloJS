@@ -152,6 +152,10 @@ let appData = {
   
   // накопления за месяц
   getBudget: function () {
+    for(let key in appData.income){
+      appData.incomeMonth += +appData.income[key];
+    }
+    
     appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
     appData.budgetDay = Math.floor(appData.budgetMonth / 30);
   },
@@ -318,26 +322,8 @@ function inputBan() {
 
 inputBan();
 
-/*
-document.querySelector('input').addEventListener('keydown', function () {
-  console.log(event.key);
-  if(isNumber(event.key) === false){
-    event.preventDefault(false);
-  }
-});
-*/
-
 
 /********** // ************/
 appData.addExpenses = appData.addExpenses.map(function (item) {
   return item[0].toUpperCase() + item.slice(1).toLowerCase();
 });
-
-console.log(appData.addExpenses.join(', '));
-
-
-if (appData.budgetDay > 0){
-  appData.getStatusIncome(appData.budgetDay);
-} else {
-  document.write('Что-то пошло не так...');
-}
