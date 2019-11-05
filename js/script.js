@@ -1,4 +1,4 @@
-//8-е
+
 'use strict';
 
 let button = document.querySelectorAll('button'),
@@ -52,7 +52,7 @@ let appData = {
   budgetMonth: 0,
   expensesMonth: 0,
   
-  start: function () {
+    start: function () {
     appData.budget = +salaryAmount.value;
     appData.getExpenses();
     appData.getIncome();
@@ -64,12 +64,12 @@ let appData = {
   },
   
   showResult: function () {
-    budgetMonthValue.value = appData.budgetMonth;
-    budgetDayValue.value = Math.ceil(appData.budgetDay);
-    expensesMonthValue.value = appData.expensesMonth;
-    additionalExpensesValue.value = appData.addExpenses.join(', ');
-    additionalIncomeValue.value = appData.addIncome.join(', ');
-    targetMonthValue.value = appData.getTargetMonth();
+    budgetMonthValue.value = this.budgetMonth;
+    budgetDayValue.value = Math.ceil(this.budgetDay);
+    expensesMonthValue.value = this.expensesMonth;
+    additionalExpensesValue.value = this.addExpenses.join(', ');
+    additionalIncomeValue.value = this.addIncome.join(', ');
+    targetMonthValue.value = this.getTargetMonth();
     
     /********   накопления за период   *********/
     periodSelect.addEventListener('change', incomePeriodValueResult);
@@ -79,7 +79,7 @@ let appData = {
       }
       return incomePeriodValue.value = appData.calcPeriod();
     }
-    incomePeriodValue.value = appData.calcPeriod();
+    incomePeriodValue.value = this.calcPeriod();
   },
   
   /********   обязательные расходы   *********/
@@ -97,7 +97,7 @@ let appData = {
       let itemExpenses = item.querySelector('.expenses-title').value;
       let cashExpenses = item.querySelector('.expenses-amount').value;
       if(itemExpenses !== '' && cashExpenses !== ''){
-        appData.expenses[itemExpenses] = cashExpenses;
+        this.expenses[itemExpenses] = cashExpenses;
       }
     })
   },
@@ -117,7 +117,7 @@ let appData = {
       let itemIncome = item.querySelector('.income-title').value;
       let cashIncome = item.querySelector('.income-amount').value;
       if(itemIncome !== '' && cashIncome !== ''){
-        appData.income[itemIncome] = cashIncome;
+        this.income[itemIncome] = cashIncome;
       }
     });
   },
@@ -128,7 +128,7 @@ let appData = {
     addExpenses.forEach(function (item) {
       item = item.trim();
       if (item !== ''){
-        appData.addExpenses.push(item);
+        this.addExpenses.push(item);
       }
     })
   },
@@ -138,33 +138,33 @@ let appData = {
     additionalIncomeItem.forEach(function(item){
       let itemValue = item.value.trim();
       if(itemValue !== ''){
-        appData.addIncome.push(itemValue);
+        this.addIncome.push(itemValue);
       }
     })
   },
   
   /********  все расходы за месяц   *********/
   getExpensesMonth: function () {
-    for(let key in appData.expenses){
-      appData.expensesMonth += +(appData.expenses[key]);
+    for(let key in this.expenses){
+      this.expensesMonth += +(this.expenses[key]);
     }
   },
   
-  // накопления за месяц
+  /********  накопления за месяц   *********/
   getBudget: function () {
-    appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
-    appData.budgetDay = Math.floor(appData.budgetMonth / 30);
+    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+    this.budgetDay = Math.floor(this.budgetMonth / 30);
   },
   
-  // достижение цели
+  /********  достижение цели   *********/
   getTargetMonth: function () {
-    return Math.ceil(targetAmount.value / appData.budgetMonth);
+    return Math.ceil(targetAmount.value / this.budgetMonth);
   },
   
   getInfoDeposit: function () {
-    if (appData.deposit){
-      appData.percentDeposit = validationNumber('Какой годовой процент?');
-      appData.moneyDeposit = validationNumber('Какая сумма заложена?');
+    if (this.deposit){
+      this.percentDeposit = validationNumber('Какой годовой процент?');
+      this.moneyDeposit = validationNumber('Какая сумма заложена?');
     }
   },
   
@@ -174,10 +174,10 @@ let appData = {
   },
   
   calcPeriod: function () {
-    return appData.budgetMonth * periodSelect.value;
+    return this.budgetMonth * periodSelect.value;
   },
   
-  // статус дохода
+  /********  статус дохода   *********/
   getStatusIncome: function (budgetDay) {
     switch (true){
       case (budgetDay === 800):
@@ -218,7 +218,7 @@ salaryAmount.addEventListener('keyup', checkBtn);
 
 /********** блокировка полей input  ************/
 let count = 0;
-let input = document.querySelectorAll('input');
+let input = document.querySelectorAll('input[type=text]');
 for (let i = 0; i < input.length; i++) {
   if (input[i].placeholder === 'Сумма' || input[i].placeholder === 'Наименование' || input[i].placeholder === 'название') {
     input[i].classList.add('blocked');
@@ -238,8 +238,10 @@ function clicked () {
   }
 }
 
+/*todo Привязать контекст вызова функции start к appData*/
 start.addEventListener('click', appData.start);
 start.addEventListener('click', clicked);
+cancel.addEventListener('click', Reset);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 expensesPlus.addEventListener('click', disableValueExpenses);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
@@ -283,7 +285,6 @@ function isSimbols(simb) {
   if(/[а-яА-я\.\,\!\?\;:]/.test(simb) || simb === 'Backspace' || simb === 'Delete' || simb === 'ArrowLeft' || simb === 'ArrowRight'){
     return true
   } else return false
-  
 }
 
 function inputBan() {
@@ -317,15 +318,24 @@ function inputBan() {
 }
 
 inputBan();
+/********** //  ************/
 
-/*
- document.querySelector('input').addEventListener('keydown', function () {
- console.log(event.key);
- if(isNumber(event.key) === false){
- event.preventDefault(false);
- }
- });
- */
+/********** метод reset  ************/
+function Reset() {
+  start.style.display = 'block';
+  cancel.style.display = 'none';
+  
+  let blocked = document.querySelectorAll('.blocked');
+  for(let i = 0; i < blocked.length; i++){
+    blocked[i].removeAttribute("disabled");
+    blocked[i].value = '';
+    blocked[i].classList.remove('.blocked');
+  }
+  let resultTotal = document.querySelectorAll('.result-total');
+  for(let i = 0; i < resultTotal.length; i++){
+    resultTotal[i].value = '';
+  }
+}
 
 
 /********** // ************/
