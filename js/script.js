@@ -74,9 +74,9 @@ let appData = {
     periodSelect.addEventListener('change', incomePeriodValueResult);
     function incomePeriodValueResult (event) {
       if (event.target.value !== periodSelect.value){
-        appData.calcPeriod();
+        this.calcPeriod();
       }
-      return incomePeriodValue.value = appData.calcPeriod();
+      return incomePeriodValue.value = this.calcPeriod();
     }
     incomePeriodValue.value = this.calcPeriod();
   },
@@ -145,13 +145,17 @@ let appData = {
   /********  все расходы за месяц   *********/
   getExpensesMonth: function () {
     for(let key in this.expenses){
-      appData.expensesMonth += +(this.expenses[key]);
+      this.expensesMonth += +(this.expenses[key]);
     }
   },
   
   /********  накопления за месяц   *********/
   getBudget: function () {
-    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+    for(let key in this.income){
+      this.incomeMonth += +this.income[key];
+    }
+    
+    this.budgetMonth = (this.budget + this.incomeMonth) - this.expensesMonth;
     this.budgetDay = Math.floor(this.budgetMonth / 30);
   },
   
@@ -224,8 +228,8 @@ for (let i = 0; i < input.length; i++) {
 
 function clicked () {
   let blocked = document.querySelectorAll('.blocked');
-    for (let i = 0; i < blocked.length; i++) {
-      blocked[i].setAttribute("disabled", "disabled");
+  for (let i = 0; i < blocked.length; i++) {
+    blocked[i].setAttribute("disabled", "disabled");
     //start.removeEventListener('click', clicked);
     start.style.display = 'none';
     cancel.style.display = 'block';
@@ -338,9 +342,3 @@ appData.addExpenses = appData.addExpenses.map(function (item) {
 
 console.log(appData.addExpenses.join(', '));
 
-
-if (appData.budgetDay > 0){
-  appData.getStatusIncome(appData.budgetDay);
-} else {
-  document.write('Что-то пошло не так...');
-}
