@@ -269,6 +269,8 @@ function Reset() {
   }
   incomePlus.style.display = 'block';
   expensesPlus.style.display = 'block';
+  
+  startBtn.setAttribute("disabled", "disabled");
 }
 /********** // ************/
 
