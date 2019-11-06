@@ -1,3 +1,4 @@
+//9-е
 'use strict';
 
 let button = document.querySelectorAll('button'),
@@ -33,7 +34,7 @@ let button = document.querySelectorAll('button'),
   
   targetAmount = document.querySelector('.target-amount'),
   periodSelect = document.querySelector('.period-select'),
-  periodAmount = document.querySelector('.period-amount')
+  periodAmount = document.querySelector('.period-amount');
 
 
 let appData = {
@@ -107,7 +108,7 @@ let appData = {
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
     incomeItems = document.querySelectorAll('.income-items');
     inputBan();
-    if(incomeItems.length ===3){
+    if(incomeItems.length === 3){
       incomePlus.style.display = 'none';
     }
   },
@@ -200,7 +201,6 @@ let appData = {
         break;
     }
   }
-  
 };
 
 /* события */
@@ -230,7 +230,6 @@ function clicked () {
   let blocked = document.querySelectorAll('.blocked');
   for (let i = 0; i < blocked.length; i++) {
     blocked[i].setAttribute("disabled", "disabled");
-    //start.removeEventListener('click', clicked);
     start.style.display = 'none';
     cancel.style.display = 'block';
   }
@@ -241,6 +240,7 @@ function Reset() {
   start.style.display = 'block';
   cancel.style.display = 'none';
   
+  //разблокировка и стирание полей
   let blocked = document.querySelectorAll('.blocked');
   for(let i = 0; i < blocked.length; i++){
     blocked[i].removeAttribute("disabled");
@@ -252,28 +252,23 @@ function Reset() {
     resultTotal[i].value = '';
   }
   
-  let incomeTitleItem = document.querySelectorAll('.income-title');
-  let incomeAmountItem = document.querySelectorAll('.income-amount');
-   if(incomeTitleItem.length === 3){
-   incomeTitleItem[2].remove();
-   incomeAmountItem[1].remove();
-   } else if(incomeTitleItem.length === 4){
-   incomeTitleItem[3].remove();
-   incomeAmountItem[2].remove();
-   }
-  let expensesTitleItem = document.querySelectorAll('.expenses-title');
-  let expensesAmountItem = document.querySelectorAll('.expenses-amount');
-  if(expensesTitleItem.length === 3){
-    expensesTitleItem[2].remove();
-    expensesAmountItem[1].remove();
-  } else if(expensesTitleItem.length === 4){
-    expensesTitleItem[3].remove();
-    expensesAmountItem[2].remove();
+  //удаление добавленных полей
+  switch (incomeItems.length){
+    case 2: incomeItems[1].remove();
+      break;
+    case 3: incomeItems[1].remove();
+      incomeItems[2].remove();
+      break;
   }
-  
-  if(incomeAmount.length > 1){
-    console.log('больше');
+  switch (expensesItems.length){
+    case 2: expensesItems[1].remove();
+      break;
+    case 3: expensesItems[1].remove();
+      expensesItems[2].remove();
+      break;
   }
+  incomePlus.style.display = 'block';
+  expensesPlus.style.display = 'block';
 }
 /********** // ************/
 
