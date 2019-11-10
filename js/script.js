@@ -31,8 +31,6 @@ let button = document.querySelectorAll('button'),
   periodSelect = document.querySelector('.period-select'),
   periodAmount = document.querySelector('.period-amount');
 
-//startBtn.setAttribute("disabled", "disabled");
-
 const AppData = function () {
   this.budget = 0;
   this.income = {};
@@ -49,16 +47,16 @@ const AppData = function () {
   this.expensesMonth = 0;
 };
 
+
 AppData.prototype.eventListener = function () {
   start.addEventListener('click', appData.start.bind(appData));
-  start.addEventListener('click', appData.clicked);
-  cancel.addEventListener('click', appData.reset);
-  salaryAmount.addEventListener('keyup', appData.checkBtn);
-  expensesPlus.addEventListener('click', appData.addExpensesBlock);
-  expensesPlus.addEventListener('click', appData.disableValueExpenses);
-  incomePlus.addEventListener('click', appData.addIncomeBlock);
-  incomePlus.addEventListener('click', appData.disableValueIncome);
-  periodSelect.addEventListener('change', appData.getPeriodTarget);
+  cancel.addEventListener('click', this.reset);
+  salaryAmount.addEventListener('keyup', this.checkBtn);
+  expensesPlus.addEventListener('click', this.addExpensesBlock);
+  expensesPlus.addEventListener('click', this.disableValueExpenses);
+  incomePlus.addEventListener('click', this.addIncomeBlock);
+  incomePlus.addEventListener('click', this.disableValueIncome);
+  periodSelect.addEventListener('change', this.getPeriodTarget);
 };
 
 AppData.prototype.checkBtn = function(){
@@ -106,17 +104,18 @@ AppData.prototype.showResult = function () {
   
   /*   период рассчета  */
   periodSelect.addEventListener('change', incomePeriodValueResult);
+  let _this = this;
   function incomePeriodValueResult (event) {
     if (event.target.value !== periodSelect.value){
       this.calcPeriod();
     }
-    return incomePeriodValue.value = this.calcPeriod();
+    return incomePeriodValue.value = _this.calcPeriod();
   }
   incomePeriodValue.value = this.calcPeriod();
 };
 
 /***********  ________LEFT SIDE_________  *******************/
-/********   дополнительные доходы   *********/
+/********   income additional   *********/
 AppData.prototype.addIncomeBlock = function () {
   let cloneIncomeItem = incomeItems[0].cloneNode(true);
   incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
@@ -127,11 +126,12 @@ AppData.prototype.addIncomeBlock = function () {
   }
 };
 AppData.prototype.getIncome = function () {
+  let _this = this;
   incomeItems.forEach(function(item){
     let itemIncome = item.querySelector('.income-title').value;
     let cashIncome = item.querySelector('.income-amount').value;
     if(itemIncome !== '' && cashIncome !== ''){
-      appData.income[itemIncome] = cashIncome;
+      _this.income[itemIncome] = cashIncome;
     }
   });
 };
@@ -146,17 +146,18 @@ AppData.prototype.disableValueIncome = function() {
     incomeAmountItem[2].value = '';
   }
 };
-/********   возможный доход   *********/
+/********  income possible    *********/
 AppData.prototype.getAddIncome = function(){
+  let _this = this;
   additionalIncomeItem.forEach(function(item){
     let itemValue = item.value.trim();
     if(itemValue !== ''){
-      appData.addIncome.push(itemValue);
+      _this.addIncome.push(itemValue);
     }
   })
 };
 
-/********   обязательные расходы   *********/
+/********   expenses additional   *********/
 AppData.prototype.addExpensesBlock = function () {
   let cloneExpensesItem = expensesItems[0].cloneNode(true);
   expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
@@ -167,11 +168,12 @@ AppData.prototype.addExpensesBlock = function () {
   }
 };
 AppData.prototype.getExpenses = function (){
+  let _this = this;
   expensesItems.forEach(function(item){
     let itemExpenses = item.querySelector('.expenses-title').value;
     let cashExpenses = item.querySelector('.expenses-amount').value;
     if(itemExpenses !== '' && cashExpenses !== ''){
-      appData.expenses[itemExpenses] = cashExpenses;
+      _this.expenses[itemExpenses] = cashExpenses;
     }
   })
 };
@@ -186,23 +188,24 @@ AppData.prototype.disableValueExpenses = function () {
     expensesAmountItem[2].value = '';
   }
 };
-/********   возможные расходы   *********/
+/********   expenses possible   *********/
 AppData.prototype.getAddExpenses = function () {
   let addExpenses = additionalExpensesItem.value.split(',');
+  let _this = this;
   addExpenses.forEach(function (item) {
     item = item.trim();
     if (item !== ''){
-      appData.addExpenses.push(item);
+     _this.addExpenses.push(item);
     }
   })
 };
-/********   период расчета   *********/
+/********   calculation period   *********/
 AppData.prototype.getPeriodTarget = function (event) {
   periodAmount.textContent = event.target.value;
 };
 
 /***********  ________RIGHT SIDE_________  *******************/
-/********  доход за месяц, день  *********/
+/********  income monthly, day  *********/
 AppData.prototype.getBudget = function () {
   for(let key in this.income){
     this.incomeMonth += +this.income[key];
@@ -211,32 +214,32 @@ AppData.prototype.getBudget = function () {
   this.budgetDay = Math.floor(this.budgetMonth / 30);
 };
 
-/********  расходы за месяц   *********/
+/********  expenses monthly   *********/
 AppData.prototype.getExpensesMonth = function () {
   for(let key in this.expenses){
     this.expensesMonth += +(this.expenses[key]);
   }
 };
 
-/******** накопления за период   *********/
+/******** accumulation for the period   *********/
 AppData.prototype.calcPeriod = function () {
   return this.budgetMonth * periodSelect.value;
 };
 
-/********  срок достижения цели   *********/
+/********  deadline for achieving the goal   *********/
 AppData.prototype.getTargetMonth = function () {
   return Math.ceil(targetAmount.value / this.budgetMonth);
 };
 
-/********  сброс   *********/
+/********  reset   *********/
 AppData.prototype.reset = function () {
   startBtn.setAttribute("disabled", "disabled");
   
   start.style.display = 'block';
   cancel.style.display = 'none';
   
-  appData.income = {};
-  appData.incomeMonth = 0;
+  this.income = {};
+  this.incomeMonth = 0;
   incomePeriodValue.value = 1;
   periodSelect.value = 1;
   
@@ -289,19 +292,16 @@ AppData.prototype.inputBan = function () {
   let input = document.querySelectorAll('input');
   for(let i = 0; i < input.length; i++) {
     if (input[i].placeholder === 'Сумма'){
-      input[i].classList.add('numbers');
-    }
+      input[i].classList.add('numbers');}
     else if (input[i].placeholder === 'Наименование'){
-      input[i].classList.add('simbols');
-    }
+      input[i].classList.add('simbols');}
   }
   
   let numbers = document.querySelectorAll('.numbers');
   for(let i = 0; i < numbers.length; i++){
     numbers[i].addEventListener('keydown', function () {
       if(isNumber(event.key) === false){
-        event.preventDefault(false);
-      }
+        event.preventDefault(false);}
     });
   }
   
@@ -309,20 +309,18 @@ AppData.prototype.inputBan = function () {
   for(let i = 0; i < simbols.length; i++) {
     simbols[i].addEventListener('keydown', function () {
       if (isSimbols(event.key) === false) {
-        event.preventDefault(false);
-      }
+        event.preventDefault(false);}
     });
   }
 };
 
 
 const appData = new AppData ();
-console.log(appData);
 
 appData.eventListener();
-
 appData.inputBan();
-/********** блокировка полей input  ************/
+
+/********** field lock input  ************/
 let input = document.querySelectorAll('input[type=text]');
 for (let i = 0; i < input.length; i++) {
   if (input[i].placeholder === 'Сумма' || input[i].placeholder === 'Наименование' || input[i].placeholder === 'название') {
