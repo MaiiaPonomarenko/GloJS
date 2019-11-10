@@ -1,6 +1,4 @@
-/**
- * Created by User on 10.11.2019.
- */
+//усложненное
 const DomElement = function (selector, height, width, bg, fontSize, text) {
   this.selector = selector;
   this.height = height;

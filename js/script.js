@@ -1,4 +1,4 @@
-//9-е
+//10-е
 'use strict';
 
 let button = document.querySelectorAll('button'),
