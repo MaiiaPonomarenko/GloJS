@@ -35,42 +35,33 @@ elemP.createElement();
 elemDiv.createElement();
 
 const elemSquare = new DomElement('.square', '100px', '100px', 'green');
-document.addEventListener('DOMContentLoaded', () => {
-   elemSquare.createElement();
- });
-
+elemSquare.createElement();
 const square = document.querySelector(elemSquare.selector);
 square.style.position = 'absolute';
 
-
 let x = 0,
-    y = 0,
-    xvel = 0,
-    yvel = 0;
+    y = 0;
 
-setInterval(function () {
-  y += yvel;
-  x += xvel;
+function www () {
   square.style.left = x + 'px';
   square.style.top = y + 'px';
-  clearInterval(setInterval);
-}, 10);
+}
 
-document.addEventListener("keydown", move, false);
+document.addEventListener("keydown", move);
+document.addEventListener("keydown", www);
 
 function move(event) {
-  
   if(event.keyCode === 37){
-    xvel -= 10;
+    x -= 10;
   }
   if (event.keyCode === 39){
-    xvel += 10;
+    x += 10;
   }
   if (event.keyCode === 38){
-    yvel -= 10;
+    y -= 10;
   }
   if (event.keyCode === 40){
-    yvel += 10;
+    y += 10;
   }
 }
 
