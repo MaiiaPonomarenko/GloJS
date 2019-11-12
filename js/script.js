@@ -180,7 +180,7 @@ class AppData {
       this.moneyDeposit = depositAmount.value;
     }
   };
-  static getPeriodTarget (event) {
+  getPeriodTarget (event) {
     periodAmount.textContent = event.target.value;
   };
   /*** ________RIGHT SIDE_________  ***/
@@ -306,6 +306,7 @@ depositCheck.addEventListener('change', function () {
       let selectIndex = this.options[this.selectedIndex].value;
       if(selectIndex === 'other'){
         depositPersent.style.display = 'inline-block';
+        depositPersent.removeAttribute('disabled');
         depositPersent.value = '';}
       else {
         depositPersent.style.display = 'none';
