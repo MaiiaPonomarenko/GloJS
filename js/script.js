@@ -1,4 +1,3 @@
-//11.2
 'use strict';
 
 const button = document.querySelectorAll('button'),
@@ -120,12 +119,12 @@ class AppData {
   };
   getIncome () {
     incomeItems = document.querySelectorAll('.income-items');
-      incomeItems.forEach((item) => {
-        let itemIncome = item.querySelector('.income-title').value,
-          cashIncome = item.querySelector('.income-amount').value;
-        if(itemIncome !== '' && cashIncome !== '')
-          this.income[itemIncome] = cashIncome;
-      });
+    incomeItems.forEach((item) => {
+      let itemIncome = item.querySelector('.income-title').value,
+        cashIncome = item.querySelector('.income-amount').value;
+      if(itemIncome !== '' && cashIncome !== '')
+        this.income[itemIncome] = cashIncome;
+    });
   };
   disableValueIncome () {
     let incomeTitleItem = document.querySelectorAll('.income-title'),
@@ -181,7 +180,7 @@ class AppData {
       this.moneyDeposit = depositAmount.value;
     }
   };
-  static getPeriodTarget (event) {
+  getPeriodTarget (event) {
     periodAmount.textContent = event.target.value;
   };
   /*** ________RIGHT SIDE_________  ***/
@@ -206,10 +205,10 @@ class AppData {
   /********  reset   *********/
   reset = function () {
     startBtn.setAttribute("disabled", "disabled");
-  
+    
     start.style.display = 'block';
     cancel.style.display = 'none';
-  
+    
     this.budget = 0;
     this.income = {};
     this.incomeMonth = 0;
@@ -222,10 +221,10 @@ class AppData {
     this.budgetDay = 0;
     this.budgetMonth = 0;
     this.expensesMonth = 0;
-  
+    
     incomePeriodValue.value = 1;
     periodSelect.value = 1;
-  
+    
     //разблокировка и стирание полей
     document.querySelectorAll('.data input[type=text]').forEach((item) => {
       item.value = '';
@@ -234,7 +233,7 @@ class AppData {
     document.querySelectorAll('.result input[type=text]').forEach((item) => {
       item.value = '';
     });
-  
+    
     //удаление добавленных полей
     incomeItems = document.querySelectorAll('.income-items');
     expensesItems = document.querySelectorAll('.expenses-items');
@@ -247,7 +246,7 @@ class AppData {
       expensesPlus.style.display = 'block';
     }
     
-  
+    
     depositBank.style.display = 'none';
     depositAmount.style.display = 'none';
     depositAmount.value = '';
@@ -307,6 +306,7 @@ depositCheck.addEventListener('change', function () {
       let selectIndex = this.options[this.selectedIndex].value;
       if(selectIndex === 'other'){
         depositPersent.style.display = 'inline-block';
+        depositPersent.removeAttribute('disabled');
         depositPersent.value = '';}
       else {
         depositPersent.style.display = 'none';
