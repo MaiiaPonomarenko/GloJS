@@ -108,6 +108,7 @@ class AppData {
     }
     incomePeriodValue.value = this.calcPeriod();
   };
+  
   /*** ________LEFT SIDE_________  ***/
   addBlock (button, selector, items){
     let cloneItem = items[0].cloneNode(true);
@@ -183,6 +184,7 @@ class AppData {
   getPeriodTarget (event) {
     periodAmount.textContent = event.target.value;
   };
+  
   /*** ________RIGHT SIDE_________  ***/
   getBudget () {
     for(let key in this.income){
@@ -202,6 +204,7 @@ class AppData {
   getTargetMonth () {
     return Math.ceil(targetAmount.value / this.budgetMonth);
   };
+  
   /********  reset   *********/
   reset = function () {
     startBtn.setAttribute("disabled", "disabled");
@@ -255,7 +258,9 @@ class AppData {
       depositCheck.checked = false;
     }
     periodAmount.textContent = 1;
-    
+  
+    localStorage.clear();
+    setCookie('Месячный доход', salaryAmount.value, -2, '/');
   };
   
   inputBan () {
@@ -337,3 +342,57 @@ for (let i = 0; i < input.length; i++) {
 appData.addExpenses = appData.addExpenses.map(function (item) {
   return item[0].toUpperCase() + item.slice(1).toLowerCase();
 });
+
+/********** cookie  ************/
+start.addEventListener('click', () => {
+  let incomeAmountItem = document.querySelectorAll('.income-amount');
+  let expensesAmountItem = document.querySelectorAll('.expenses-amount');
+  
+  localStorage.setItem('Месячный доход', salaryAmount.value);
+  for(let i = 0; i < incomeItems.length; i++){
+    let name1 = 'Дополнительный доход ' + (i+1);
+    localStorage.setItem(name1, incomeAmountItem[i].value);
+  }
+  
+  for(let i = 0; i < additionalIncomeItem.length; i++){
+    let name2 = 'Возможный доход ' + (i+1);
+    localStorage.setItem(name2, additionalIncomeItem[i].value);
+  }
+  
+  for(let i = 0; i < expensesAmountItem.length; i++){
+    let name3 = 'Обязательный расход ' + (i+1);
+    localStorage.setItem(name3, expensesAmountItem[i].value);
+  }
+
+  //localStorage.setItem('Возможные расходы', additionalExpensesItem.value);
+  //localStorage.setItem('Цель', targetAmount.value);
+  
+  
+  
+  //document.cookie = 'Месячный доход=salaryAmount.value';
+  //document.cookie = 'Дополнительный доход 1=incomeAmountItem[0].value';
+  //document.cookie = 'Месячный доход=salaryAmount.value';
+  //document.cookie = 'Месячный доход=salaryAmount.value';
+  //document.cookie = 'Месячный доход=salaryAmount.value';
+  //document.cookie = 'Месячный доход=salaryAmount.value';
+
+  //localStorage.removeItem('Месячный доход');
+  
+  
+  /*
+  for(let i = 1; i < incomeItems.length; i++){
+    localStorage.incomeItems[i] = incomeItems[i].value;
+  }
+  for(let i = 1; i < expensesItems.length; i++){
+    expensesItems[i].parentNode.removeChild(expensesItems[i]);
+  }*/
+  const setCookie = (key, value, year, month, day, path, domain, secure) => {
+    let cookieStr = key + "=" + value;
+    document.cookie = cookieStr;
+  };
+  
+  setCookie('Месячный доход', salaryAmount.value);
+  
+});
+
+
